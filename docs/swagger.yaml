@@ -1,0 +1,41 @@
+definitions:
+  main.EmailRequest:
+    properties:
+      body:
+        type: string
+      recipient:
+        type: string
+      sender:
+        type: string
+    type: object
+  main.ScanResponse:
+    properties:
+      is_malicious:
+        type: boolean
+      reason:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /scan:
+    post:
+      consumes:
+      - application/json
+      description: Scan the email message for malicious content
+      parameters:
+      - description: Email to scan
+        in: body
+        name: email
+        required: true
+        schema:
+          $ref: '#/definitions/main.EmailRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.ScanResponse'
+      summary: Scan email for viruses
+swagger: "2.0"

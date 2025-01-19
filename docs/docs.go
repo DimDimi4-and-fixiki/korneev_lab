@@ -17,23 +17,21 @@ const docTemplate = `{
     "paths": {
         "/scan": {
             "post": {
-                "description": "Scan the email message for malicious content",
+                "description": "Scan a file via multipart/form-data",
                 "consumes": [
-                    "application/json"
+                    "multipart/form-data"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "summary": "Scan email for viruses",
+                "summary": "Scan a file",
                 "parameters": [
                     {
-                        "description": "Email to scan",
-                        "name": "email",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/main.EmailRequest"
-                        }
+                        "type": "file",
+                        "description": "Upload file",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -48,20 +46,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "main.EmailRequest": {
-            "type": "object",
-            "properties": {
-                "body": {
-                    "type": "string"
-                },
-                "recipient": {
-                    "type": "string"
-                },
-                "sender": {
-                    "type": "string"
-                }
-            }
-        },
         "main.ScanResponse": {
             "type": "object",
             "properties": {

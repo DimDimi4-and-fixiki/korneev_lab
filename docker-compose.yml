@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  mail_deamon:
+    container_name: webserver
+    build: .
+    ports:
+      - "8081:8080"
+  prometheus:
+    container_name: prom
+    image: prom/prometheus-linux-arm64
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  grafana:
+    image: grafana/grafana:6.1.6
+    ports:
+      - 3000:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=dima
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
